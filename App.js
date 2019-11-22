@@ -4,18 +4,31 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack' ;
 import LoginScreen from './screens/LoginScreen';
 import QRCodeScreen from './screens/QRCodeScreen';
+import HomeScreen from './screens/HomeScreen';
+import NavigationService from './NavigationService';
 
 
 const AppsStackNavigator = createStackNavigator({
     Login: LoginScreen,
-    QRCode: QRCodeScreen
-})
+    Home: HomeScreen,
+    QRCode: QRCodeScreen,
+},
+  {
+    initialRouteName: 'Login'
+
+    
+  }
+)
 const AppContainer = createAppContainer(AppsStackNavigator)
 
 export default class App extends React.Component {
   render(){
     return (
-      <AppContainer />
+      <AppContainer 
+      ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+      />
 
       );
   

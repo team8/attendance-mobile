@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
@@ -10,25 +10,33 @@ import {
     Button,
     TextInput,
 } from "react-native";
+import NavigationService from '../NavigationService.js';
 
+
+
+var url = "https://civil-charmer-256720.appspot.com/"
 class LoginScreen extends React.Component {
-
+// remembering the values
     static navigationOptions = {
-        title: 'Login'
+        title: 'Sign Up'
     }
-    state = {
-        token: '', first: '', last: '', email: '', subteam: '', password: '', confirmPassword: '', modalVisible: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            token: '', first: '', last: '', email: '', subteam: '', password: '', confirmPassword: '', modalVisible: false,
+        }
     }
-    setModalVisible(visible) {
+
+    setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
-
+    // login method
     login = () => {
         var signinData = {
             "id": this.state.token,
             "password": this.state.password
         }
-        fetch("http://zachary-d4tm.localhost.run/signin/", {
+        fetch(`${url}signin/`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(signinData)
@@ -37,10 +45,19 @@ class LoginScreen extends React.Component {
             if(res == "User does not exist." || res == "Incorrect password.") {
                 alert(res);
             } else {
-                
+                var loginData = JSON.parse(res)
+                for(var property in loginData) {
+                    if (property != "password") {
+                        AsyncStorage.setItem(property, loginData[property])
+                    }
+                }
+                // this.setModalVisible(false);
+                NavigationService.navigate('Home');
             }
         });
+
     }
+    //signup method
     signUp = () => {
         const { token, first, last, email, subteam, password, confirmPassword } = this.state;
         if (password != confirmPassword) {
@@ -57,7 +74,7 @@ class LoginScreen extends React.Component {
                     "subteam": this.state.subteam,
                     "password": this.state.password
                 }
-                fetch("http://zachary-d4tm.localhost.run/signup/", {
+                fetch(`${url}signup/`, {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -69,10 +86,13 @@ class LoginScreen extends React.Component {
                             // AsyncStorage.getItem(property).then((value) => {
                             //     alert(value);
                             // })
-                            if (property != "password") {
+                            if (property != "password"  ) {
                                 AsyncStorage.setItem(property, data[property])
                             }
                         }
+                        this.setModalVisible(false);
+                        this.props.navigation.navigate('Home')
+            
                     }
                 });
             } else {

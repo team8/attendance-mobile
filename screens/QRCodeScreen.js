@@ -64,3 +64,30 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
+
+//var date = new Date().getDate(); //Current Date
+//var month = new Date().getMonth() + 1; //Current Month
+//var year = new Date().getFullYear(); //Current Year
+//var hours = new Date().getHours(); //Current Hours
+//var min = new Date().getMinutes(); //Current Minutes
+//var sec = new Date().getSeconds(); //Current Seconds
+//var finalHours = new Date() .getHours();
+//var finalMin = new Date() .getMinutes();
+
+//this.setState(hours)
+//this.setState(finalHours)
+//this.setState(min)
+//this.setState(finalMin)
+// var totalHours = hours - finalHours 
+// var totalMintues = min - finalMin
+// var totalTime = totalHours + ":" + totalMinutes
+// sendTime () => {
+//  var totalTime;
+//  fetch("http://zachary-d4tm.localhost.run/hours/")
+//    method: "POST"
+//    body: JSON.stringify(totalTime)
+//    }).then(function(response)){
+//      AysncStorage.settime(totalTime)
+//}
+//
+//}
