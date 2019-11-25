@@ -20,11 +20,8 @@ class LoginScreen extends React.Component {
     static navigationOptions = {
         title: 'Sign Up'
     }
-    constructor(props) {
-        super(props);
-        this.state = {
-            token: '', first: '', last: '', email: '', subteam: '', password: '', confirmPassword: '', modalVisible: false,
-        }
+    state = {
+        token: '', first: '', last: '', email: '', subteam: '', password: '', confirmPassword: '', modalVisible: false,
     }
 
     setModalVisible = (visible) => {
@@ -32,6 +29,7 @@ class LoginScreen extends React.Component {
     }
     // login method
     login = () => {
+        var self = this;
         var signinData = {
             "id": this.state.token,
             "password": this.state.password
@@ -51,7 +49,7 @@ class LoginScreen extends React.Component {
                         AsyncStorage.setItem(property, loginData[property])
                     }
                 }
-                // this.setModalVisible(false);
+                self.setState({ modalVisible: false });
                 NavigationService.navigate('Home');
             }
         });
@@ -59,6 +57,7 @@ class LoginScreen extends React.Component {
     }
     //signup method
     signUp = () => {
+        var self = this;
         const { token, first, last, email, subteam, password, confirmPassword } = this.state;
         if (password != confirmPassword) {
             alert("Passwords do not match")
@@ -90,8 +89,9 @@ class LoginScreen extends React.Component {
                                 AsyncStorage.setItem(property, data[property])
                             }
                         }
-                        this.setModalVisible(false);
-                        this.props.navigation.navigate('Home')
+                        self.setModalVisible(false);
+                       NavigationService.navigate('Home')
+                       
             
                     }
                 });
@@ -99,8 +99,16 @@ class LoginScreen extends React.Component {
                 alert("Please fill in all the fields")
             }
         }
-
     }
+
+    componentDidMount(){
+        AsyncStorage.getItem("id").then((id) => {
+            if(id != null){
+                NavigationService.navigate('Home')
+            }
+        })
+    }
+
 
     render() {
         return (

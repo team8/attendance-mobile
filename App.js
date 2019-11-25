@@ -12,6 +12,7 @@ const AppsStackNavigator = createStackNavigator({
     Login: LoginScreen,
     Home: HomeScreen,
     QRCode: QRCodeScreen,
+   
 },
   {
     initialRouteName: 'Login'
