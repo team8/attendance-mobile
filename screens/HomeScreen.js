@@ -22,11 +22,16 @@ class HomeScreen extends React.Component{
     render() {
         return (
             <View>
-                <Button title="Scan QR code"
+                
+                <Button title="scan QR code"
                 onPress ={() => {
                    this.props.navigation.navigate('QRCode')
                 }}
                 ></Button>
+                <Button title="log out"
+                onPress ={() => {
+                    this.props.navigation.navigate('LoginScreen')
+                }}></Button>
             </View>
         )
     }

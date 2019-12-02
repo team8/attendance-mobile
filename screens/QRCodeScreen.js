@@ -18,7 +18,12 @@ export default class ScanScreen extends Component {
   }
 
   onSuccess = (e) => {
-      alert(e.data)
+      var timeInMin = new Date().getMinutes();
+      var timeInHour = new Date().getHours();
+      var timeIn = timeInHour + ":" + timeInMin
+      
+      alert("you have successfully signed in")
+
   }
 
   render() {
@@ -27,10 +32,9 @@ export default class ScanScreen extends Component {
         onRead={this.onSuccess.bind(this)}
         reactivate={true}
         reactivateTimeout={2500}
-        topContent={
-        }
-        bottomContent={
-        }
+        topContent={<Text style={styles.centerText}>Scan to log Hours</Text>}
+        
+        
       />
     );
   }
