@@ -10,6 +10,8 @@
     "firebase": "^7.4.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-background-fetch": "^2.4.2",
+    "react-native-background-task": "^0.2.1",
     "react-native-camera": "^3.8.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",

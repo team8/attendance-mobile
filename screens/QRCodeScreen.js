@@ -3,26 +3,81 @@
 import React, { Component } from 'react';
 
 import {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   Text,
   TouchableOpacity,
 } from 'react-native';
+import BackgroundTask from 'react-native-background-task'
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
+BackgroundTask.define(async () => {
+  
+  var checkpoints = {
+    left: {
+      latitude: 37.436634,
+      longitude: -122.156966  
+    },
+    bottom: {
+      latitude: 37.435876,
+    },
+    right: {
+      longitude: -122.154633
+    }
+  }
+  var url = "https://civil-charmer-256720.appspot.com/"
+  navigator.geolocation.getCurrentPosition(position => {
+    if(checkpoints.left.latitude < position.coords.latitude && position.coords.latitude < checkpoints.bottom.latitude 
+      && checkpoints.right.longitude < position.coords.longitude && position.coords.longitude && checkpoints.left.longitude){
+        
+    } else {
+      AsyncStorage.getItem("loginTime").then((value) => {
+        var timeout = new Date().getTime();
+        var totalTime = value - timeout;
+        //fetch(`${url}logHours/`, {
+        //  method: "POST",
+        //  headers: { 'Content-Type': 'application/json' },
+        //  body: JSON.stringify(signinData)
+        //}
+        
+      })
+      
+    }
+  })
+  
+
+})
 export default class ScanScreen extends Component {
 
   static navigationOptions = {
-    title: 'Log Hours'
+    title: 'Log Hours',
+    headerTintColor: "white",
+
+    headerStyle: {
+      backgroundColor: '#03572C'
+    },
   }
 
   onSuccess = (e) => {
-      var timeInMin = new Date().getMinutes();
-      var timeInHour = new Date().getHours();
-      var timeIn = timeInHour + ":" + timeInMin
+    if (e.data == "Team8Attendence") {
+      var timeIn = new Date().getTime();
+      AsyncStorage.setItem("loginTime", timeIn.toString());
+      navigator.geolocation.getCurrentPosition(position => {
+              
+          })
       
-      alert("you have successfully signed in")
+      
+      BackgroundTask.schedule({
+        period: 100,
+      })
+      this.props.navigation.navigate('Home')
+    } else {
+
+
+      alert("Invalid QR code")
+    }
 
   }
 
@@ -33,8 +88,8 @@ export default class ScanScreen extends Component {
         reactivate={true}
         reactivateTimeout={2500}
         topContent={<Text style={styles.centerText}>Scan to log Hours</Text>}
-        
-        
+
+
       />
     );
   }
@@ -60,29 +115,3 @@ const styles = StyleSheet.create({
   },
 });
 
-//var date = new Date().getDate(); //Current Date
-//var month = new Date().getMonth() + 1; //Current Month
-//var year = new Date().getFullYear(); //Current Year
-//var hours = new Date().getHours(); //Current Hours
-//var min = new Date().getMinutes(); //Current Minutes
-//var sec = new Date().getSeconds(); //Current Seconds
-//var finalHours = new Date() .getHours();
-//var finalMin = new Date() .getMinutes();
-
-//this.setState(hours)
-//this.setState(finalHours)
-//this.setState(min)
-//this.setState(finalMin)
-// var totalHours = hours - finalHours 
-// var totalMintues = min - finalMin
-// var totalTime = totalHours + ":" + totalMinutes
-// sendTime () => {
-//  var totalTime;
-//  fetch("http://zachary-d4tm.localhost.run/hours/")
-//    method: "POST"
-//    body: JSON.stringify(totalTime)
-//    }).then(function(response)){
-//      AysncStorage.settime(totalTime)
-//}
-//
-//}

@@ -18,7 +18,12 @@ var url = "https://civil-charmer-256720.appspot.com/"
 class LoginScreen extends React.Component {
 // remembering the values
     static navigationOptions = {
-        title: 'Sign Up'
+        title: 'Sign Up',
+        headerTintColor: "white",
+        
+        headerStyle: {
+            backgroundColor: '#03572C'
+          },
     }
     state = {
         token: '', first: '', last: '', email: '', subteam: '', password: '', confirmPassword: '', modalVisible: false,
@@ -209,7 +214,16 @@ class LoginScreen extends React.Component {
                     </View>
                 </View>
                 <Button title="Sign Up"
-                    onPress={() => this.signUp()} />
+                    
+                    onPress={() => 
+                        {var know = this
+                        this.props.navigation.navigate('Home', {  
+                            first: this.state.first,
+                            last: this.state.last,  
+                        })
+                        this.signUp()  
+                    }} 
+                    />
                 <Button title="Already have an account?"
                     onPress={() => this.setModalVisible(true)} />
             </KeyboardAwareScrollView>
@@ -218,6 +232,7 @@ class LoginScreen extends React.Component {
 
 
 }
+
 export default LoginScreen;
 
 const styles = StyleSheet.create({
@@ -246,6 +261,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderColor: "#03572C",
         borderBottomWidth: 3
-    }
+    },
+   
 });
 
