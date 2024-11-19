@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "firebase": "^7.4.0",
+    "firebase": "^10.9.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-background-fetch": "^2.4.2",
